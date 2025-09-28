@@ -97,7 +97,7 @@ export default function Home() {
       <section className="w-full max-w-5xl px-6 pt-20 md:pt-28 pb-12 md:pb-16">
         <h1 className="text-text-primary font-extrabold leading-[1.05] tracking-tight text-5xl md:text-7xl">
           Build your own <span className="text-accent">micro-SaaS</span> apps
-          <br className="hidden md:block" /> in minutes.
+          <span className="hidden md:block"></span> in minutes.
         </h1>
 
         <p className="mt-4 max-w-2xl text-lg md:text-xl text-text-primary/70">
