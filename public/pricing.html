@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Pricing — SwankyTools™ AI Builder</title>
+  <meta name="description" content="Launch AI micro-SaaS tools. Upgrade for exports, pro templates and more."/>
+  <style>
+    :root{--bg:#0b0d10;--card:#141821;--text:#e9edf3;--muted:#97a2b1;--accent:#ff5d37}
+    *{box-sizing:border-box}
+    body{margin:0;background:var(--bg);color:var(--text);font:16px/1.5 system-ui,-apple-system,Segoe UI,Inter,Roboto,Arial}
+    .wrap{max-width:1040px;margin:0 auto;padding:40px 20px}
+    header{display:flex;align-items:center;justify-content:space-between;margin-bottom:28px}
+    header a{color:var(--text);opacity:.85;text-decoration:none}
+    h1{font-size:42px;margin:10px 0 6px}
+    p.lead{opacity:.8;margin:0 0 28px}
+    .grid{display:grid;gap:18px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+    .card{background:var(--card);border:1px solid #1f2631;border-radius:16px;padding:22px}
+    .plan{font-weight:700;margin:0 0 6px}
+    .price{font-size:30px;margin:6px 0 14px}
+    ul{margin:0 0 18px 18px}
+    a.btn{display:inline-block;padding:12px 16px;border-radius:10px;border:1px solid var(--accent);color:var(--bg);background:var(--accent);text-decoration:none;font-weight:650}
+    a.btn.secondary{background:transparent;color:var(--text);border-color:#334155}
+    a.btn:hover{filter:brightness(1.08)}
+    footer{opacity:.7;margin-top:36px;font-size:14px}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <a href="/"><img src="https://swankytools.com/logo.png" alt="SwankyTools" height="28" style="vertical-align:middle;border-radius:4px"> <strong style="margin-left:8px">SwankyTools™ AI Builder</strong></a>
+      <nav><a href="/">Home</a></nav>
+    </header>
+
+    <h1>Pricing</h1>
+    <p class="lead">Start free. Upgrade anytime to unlock exports, pro templates and higher limits.</p>
+
+    <div class="grid">
+      <div class="card">
+        <div class="plan">Free</div>
+        <div class="price">₹0</div>
+        <ul>
+          <li>Prompt-to-app builder</li>
+          <li>Basic templates</li>
+          <li>Community updates</li>
+        </ul>
+        <a class="btn secondary" href="/">Start free</a>
+      </div>
+
+      <div class="card">
+        <div class="plan">Pro</div>
+        <div class="price">₹499 / month</div>
+        <ul>
+          <li>Export generated code</li>
+          <li>Pro template catalog</li>
+          <li>Priority queue</li>
+        </ul>
+        <!-- TODO: replace # with your Razorpay Payment Link -->
+        <a class="btn" href="#" rel="nofollow">Buy Pro</a>
+      </div>
+
+      <div class="card">
+        <div class="plan">Business</div>
+        <div class="price">₹1499 / month</div>
+        <ul>
+          <li>Everything in Pro</li>
+          <li>White-label rights</li>
+            <li>Email support</li>
+        </ul>
+        <!-- TODO: replace # with your Razorpay Payment Link -->
+        <a class="btn" href="#" rel="nofollow">Buy Business</a>
+      </div>
+    </div>
+
+    <footer>Questions? Ping hello@swankytools.com</footer>
+  </div>
+</body>
+</html>
