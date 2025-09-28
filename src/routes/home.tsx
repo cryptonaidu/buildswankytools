@@ -1,172 +1,182 @@
+// src/pages/index.tsx
 import { useRef, useState, useEffect, useMemo } from 'react';
 import { ArrowRight } from 'react-feather';
 import { useNavigate } from 'react-router';
 import {
-	AgentModeToggle,
-	type AgentMode,
+  AgentModeToggle,
+  type AgentMode,
 } from '../components/agent-mode-toggle';
 import { useAuthGuard } from '../hooks/useAuthGuard';
 
 export default function Home() {
-	const navigate = useNavigate();
-	const { requireAuth } = useAuthGuard();
-	const textareaRef = useRef<HTMLTextAreaElement>(null);
-	const [agentMode, setAgentMode] = useState<AgentMode>('deterministic');
-	
-	
-	const placeholderPhrases = useMemo(() => [
-		"todo list app",
-		"F1 fantasy game",
-		"personal finance tracker"
-	], []);
-	const [currentPlaceholderPhraseIndex, setCurrentPlaceholderPhraseIndex] = useState(0);
-	const [currentPlaceholderText, setCurrentPlaceholderText] = useState("");
-	const [isPlaceholderTyping, setIsPlaceholderTyping] = useState(true);
+  const navigate = useNavigate();
+  const { requireAuth } = useAuthGuard();
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
 
-	const handleCreateApp = (query: string, mode: AgentMode) => {
-		const encodedQuery = encodeURIComponent(query);
-		const encodedMode = encodeURIComponent(mode);
-		const intendedUrl = `/chat/new?query=${encodedQuery}&agentMode=${encodedMode}`;
+  const [agentMode, setAgentMode] = useState<AgentMode>('deterministic');
 
-		if (
-			!requireAuth({
-				requireFullAuth: true,
-				actionContext: 'to create applications',
-				intendedUrl: intendedUrl,
-			})
-		) {
-			return;
-		}
+  // Rotating placeholder ideas
+  const placeholderPhrases = useMemo(
+    () => [
+      'podcast show-notes generator with Stripe paywall',
+      'AI resume screener for recruiters',
+      'YouTube to blog post converter',
+      'AI CRM for solo founders',
+      'tweet thread generator from URLs',
+    ],
+    []
+  );
+  const [i, setI] = useState(0);
+  const [typed, setTyped] = useState('');
+  const [typing, setTyping] = useState(true);
 
-		// User is already authenticated, navigate immediately
-		navigate(intendedUrl);
-	};
+  const handleCreateApp = (query: string, mode: AgentMode) => {
+    const q = query?.trim() || placeholderPhrases[i]; // fall back to current idea
+    if (!q) return;
 
-	// Auto-resize textarea based on content
-	const adjustTextareaHeight = () => {
-		if (textareaRef.current) {
-			textareaRef.current.style.height = 'auto';
-			const scrollHeight = textareaRef.current.scrollHeight;
-			const maxHeight = 300; // Maximum height in pixels
-			textareaRef.current.style.height =
-				Math.min(scrollHeight, maxHeight) + 'px';
-		}
-	};
+    const encodedQuery = encodeURIComponent(q);
+    const encodedMode = encodeURIComponent(mode);
+    const intendedUrl = `/chat/new?query=${encodedQuery}&agentMode=${encodedMode}`;
 
-	useEffect(() => {
-		adjustTextareaHeight();
-	}, []);
-	
-	// Typewriter effect
-	useEffect(() => {
-		const currentPhrase = placeholderPhrases[currentPlaceholderPhraseIndex];
-		
-		if (isPlaceholderTyping) {
-			if (currentPlaceholderText.length < currentPhrase.length) {
-				const timeout = setTimeout(() => {
-					setCurrentPlaceholderText(currentPhrase.slice(0, currentPlaceholderText.length + 1));
-				}, 100); // Typing speed
-				return () => clearTimeout(timeout);
-			} else {
-				// Pause before erasing
-				const timeout = setTimeout(() => {
-					setIsPlaceholderTyping(false);
-				}, 2000); // Pause duration
-				return () => clearTimeout(timeout);
-			}
-		} else {
-			if (currentPlaceholderText.length > 0) {
-				const timeout = setTimeout(() => {
-					setCurrentPlaceholderText(currentPlaceholderText.slice(0, -1));
-				}, 50); // Erasing speed
-				return () => clearTimeout(timeout);
-			} else {
-				// Move to next phrase
-				setCurrentPlaceholderPhraseIndex((prev) => (prev + 1) % placeholderPhrases.length);
-				setIsPlaceholderTyping(true);
-			}
-		}
-	}, [currentPlaceholderText, currentPlaceholderPhraseIndex, isPlaceholderTyping, placeholderPhrases]);
-	return (
-		<div className="flex flex-col items-center size-full">
-			<div className="rounded-md mt-46 w-full max-w-2xl overflow-hidden">
-				<div className="absolute inset-2 bottom-0 text-accent z-0 opacity-20">
-					<svg width="100%" height="100%">
-						<defs>
-							<pattern
-								id=":S2:"
-								viewBox="-6 -6 12 12"
-								patternUnits="userSpaceOnUse"
-								width="12"
-								height="12"
-							>
-								<circle
-									cx="0"
-									cy="0"
-									r="1"
-									fill="currentColor"
-								></circle>
-							</pattern>
-						</defs>
-						<rect
-							width="100%"
-							height="100%"
-							fill="url(#:S2:)"
-						></rect>
-					</svg>
-				</div>
-				<div className="px-6 p-8 flex flex-col items-center z-10">
-					<h1 className="text-shadow-sm text-shadow-red-200 dark:text-shadow-red-900 text-accent font-medium leading-[1.1] tracking-tight text-6xl w-full mb-4 bg-clip-text bg-gradient-to-r from-text-primary to-text-primary/90">
-						From idea → revenue: build micro-SaaS in minutes!
-					</h1>
+    if (
+      !requireAuth({
+        requireFullAuth: true,
+        actionContext: 'to create applications',
+        intendedUrl,
+      })
+    ) {
+      return;
+    }
+    navigate(intendedUrl);
+  };
 
-					<form
-						method="POST"
-						onSubmit={(e) => {
-							e.preventDefault();
-							const query = textareaRef.current!.value;
-							handleCreateApp(query, agentMode);
-						}}
-						className="flex z-10 flex-col w-full min-h-[150px] bg-bg-4 border border-accent/30 dark:border-accent/50 justify-between dark:bg-bg-2 rounded-[18px] shadow-textarea p-5 transition-all duration-200"
-					>
-						<textarea
-							className="w-full resize-none ring-0 z-20 outline-0 placeholder:text-text-primary/60 text-text-primary"
-							name="query"
-							placeholder={`Create a ${currentPlaceholderText}`}
-							ref={textareaRef}
-							onChange={adjustTextareaHeight}
-							onInput={adjustTextareaHeight}
-							onKeyDown={(e) => {
-								if (e.key === 'Enter' && !e.shiftKey) {
-									e.preventDefault();
-									const query = textareaRef.current!.value;
-									handleCreateApp(query, agentMode);
-								}
-							}}
-						/>
-						<div className="flex items-center justify-between mt-4 pt-1">
-							{import.meta.env.VITE_AGENT_MODE_ENABLED ? (
-								<AgentModeToggle
-									value={agentMode}
-									onChange={setAgentMode}
-									className="flex-1"
-								/>
-							) : (
-								<div></div>
-							)}
+  // Auto-resize textarea
+  const resizeTextarea = () => {
+    if (!textareaRef.current) return;
+    const el = textareaRef.current;
+    el.style.height = 'auto';
+    el.style.height = Math.min(el.scrollHeight, 300) + 'px';
+  };
+  useEffect(() => {
+    resizeTextarea();
+  }, []);
 
-							<div className="flex items-center justify-end ml-4">
-								<button
-									type="submit"
-									className="bg-accent text-white p-1 rounded-md *:size-5 transition-all duration-200 hover:shadow-md"
-								>
-									<ArrowRight />
-								</button>
-							</div>
-						</div>
-					</form>
-				</div>
-			</div>
-		</div>
-	);
+  // Typewriter effect for placeholder
+  useEffect(() => {
+    const phrase = placeholderPhrases[i] || '';
+    if (typing) {
+      if (typed.length < phrase.length) {
+        const t = setTimeout(
+          () => setTyped(phrase.slice(0, typed.length + 1)),
+          60
+        );
+        return () => clearTimeout(t);
+      } else {
+        const t = setTimeout(() => setTyping(false), 1200);
+        return () => clearTimeout(t);
+      }
+    } else {
+      if (typed.length > 0) {
+        const t = setTimeout(() => setTyped(typed.slice(0, -1)), 35);
+        return () => clearTimeout(t);
+      } else {
+        setI((prev) => (prev + 1) % placeholderPhrases.length);
+        setTyping(true);
+      }
+    }
+  }, [typed, typing, i, placeholderPhrases]);
+
+  return (
+    <div className="relative flex flex-col items-center w-full">
+      {/* soft brand glow */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute -top-40 -left-40 h-[520px] w-[520px] rounded-full blur-[120px] opacity-25"
+        style={{ background: 'radial-gradient(600px 600px at center, var(--accent), transparent 70%)' }}
+      />
+      <section className="w-full max-w-5xl px-6 pt-20 md:pt-28 pb-12 md:pb-16">
+        <h1 className="text-text-primary font-extrabold leading-[1.05] tracking-tight text-5xl md:text-7xl">
+          Build your own <span className="text-accent">micro-SaaS</span> apps
+          <br className="hidden md:block" /> in minutes.
+        </h1>
+
+        <p className="mt-4 max-w-2xl text-lg md:text-xl text-text-primary/70">
+          Describe the idea → we scaffold the UI and backend. Export the code or host it here.
+        </p>
+
+        {/* Prompt card */}
+        <form
+          method="POST"
+          onSubmit={(e) => {
+            e.preventDefault();
+            const query = textareaRef.current?.value || '';
+            handleCreateApp(query, agentMode);
+          }}
+          className="mt-8 md:mt-10 rounded-2xl border border-accent/40 bg-bg-4/60 backdrop-blur-sm shadow-[0_0_0_1px_rgba(255,255,255,0.02)]"
+        >
+          <div className="p-4 md:p-5">
+            <div className="flex items-start gap-3">
+              <textarea
+                ref={textareaRef}
+                name="query"
+                aria-label="Describe the tool you want to build"
+                placeholder={`e.g. ${typed}`}
+                onInput={resizeTextarea}
+                onChange={resizeTextarea}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' && !e.shiftKey) {
+                    e.preventDefault();
+                    const query = textareaRef.current?.value || '';
+                    handleCreateApp(query, agentMode);
+                  }
+                }}
+                className="flex-1 resize-none bg-transparent text-base md:text-lg text-text-primary placeholder:text-text-primary/50 outline-none min-h-[56px] md:min-h-[68px]"
+              />
+              <button
+                type="submit"
+                className="shrink-0 rounded-xl px-4 py-3 text-sm font-semibold bg-accent text-black hover:brightness-110 transition"
+              >
+                <span className="inline-flex items-center gap-2">
+                  Generate <ArrowRight size={16} />
+                </span>
+              </button>
+            </div>
+
+            <div className="mt-3 flex items-center justify-between gap-3">
+              {import.meta.env.VITE_AGENT_MODE_ENABLED ? (
+                <AgentModeToggle
+                  value={agentMode}
+                  onChange={setAgentMode}
+                  className="flex-1"
+                />
+              ) : (
+                <span />
+              )}
+              <div className="text-xs text-text-primary/55">
+                Press <kbd className="px-1 py-0.5 rounded bg-bg-3 border border-white/10">Enter</kbd> to generate
+              </div>
+            </div>
+          </div>
+        </form>
+
+        {/* CTAs */}
+        <div className="mt-6 flex flex-wrap items-center gap-3">
+          <a
+            id="get-started"
+            href="/auth/sign-in"
+            className="rounded-xl px-5 py-3 text-sm font-semibold bg-accent text-black hover:brightness-110 transition"
+          >
+            Start free
+          </a>
+          <a
+            href="/pricing.html"
+            className="rounded-xl px-5 py-3 text-sm font-semibold border border-accent/40 text-text-primary hover:bg-bg-3 transition"
+          >
+            See pricing
+          </a>
+          <span className="text-text-primary/55 text-sm">No credit card required</span>
+        </div>
+      </section>
+    </div>
+  );
 }
