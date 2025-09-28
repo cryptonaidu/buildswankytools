@@ -4,36 +4,51 @@
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
   <title>Pricing — SwankyTools™ AI Builder</title>
-  <meta name="description" content="Launch AI micro-SaaS tools. Upgrade for exports, pro templates and more."/>
+  <meta name="description" content="Launch AI micro-SaaS tools. Upgrade to unlock exports, pro templates and higher limits."/>
   <style>
-    :root{--bg:#0b0d10;--card:#141821;--text:#e9edf3;--muted:#97a2b1;--accent:#ff5d37}
-    *{box-sizing:border-box}
-    body{margin:0;background:var(--bg);color:var(--text);font:16px/1.5 system-ui,-apple-system,Segoe UI,Inter,Roboto,Arial}
-    .wrap{max-width:1040px;margin:0 auto;padding:40px 20px}
-    header{display:flex;align-items:center;justify-content:space-between;margin-bottom:28px}
-    header a{color:var(--text);opacity:.85;text-decoration:none}
-    h1{font-size:42px;margin:10px 0 6px}
+    :root{
+      --bg:#0b0d10;--card:#131821;--line:#1f2833;--muted:#9aa3b2;--text:#e9edf3;--accent:#ff5d37
+    }
+    @media (prefers-color-scheme: light){
+      :root{--bg:#f7f8fa;--card:#ffffff;--line:#e6e8ee;--muted:#556070;--text:#0b0d10}
+    }
+    *{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--text);font:16px/1.6 system-ui,-apple-system,Segoe UI,Inter,Roboto,Arial}
+    .wrap{max-width:1100px;margin:0 auto;padding:28px 20px 60px}
+    header{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px}
+    header a{color:var(--text);opacity:.9;text-decoration:none;display:flex;align-items:center;gap:10px}
+    header img{height:28px;width:28px;border-radius:4px}
+    h1{font-size:40px;margin:12px 0}
     p.lead{opacity:.8;margin:0 0 28px}
-    .grid{display:grid;gap:18px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
-    .card{background:var(--card);border:1px solid #1f2631;border-radius:16px;padding:22px}
-    .plan{font-weight:700;margin:0 0 6px}
-    .price{font-size:30px;margin:6px 0 14px}
-    ul{margin:0 0 18px 18px}
-    a.btn{display:inline-block;padding:12px 16px;border-radius:10px;border:1px solid var(--accent);color:var(--bg);background:var(--accent);text-decoration:none;font-weight:650}
-    a.btn.secondary{background:transparent;color:var(--text);border-color:#334155}
-    a.btn:hover{filter:brightness(1.08)}
+    .grid{display:grid;gap:18px;grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
+    .card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:22px 22px 20px}
+    .plan{font-weight:800;font-size:18px;margin:0 0 4px}
+    .price{font-size:34px;font-weight:800;margin:8px 0 14px}
+    ul{margin:0 0 18px 20px}
+    li{margin:4px 0}
+    .btn{display:inline-block;padding:12px 16px;border-radius:12px;font-weight:700;text-decoration:none}
+    .btn.primary{background:var(--accent);color:#0b0d10}
+    .btn.outline{border:1px solid var(--line);color:var(--text)}
+    .btn:hover{filter:brightness(1.07)}
+    .badge{display:inline-block;padding:6px 10px;border-radius:999px;font-size:12px;background:rgba(255,93,55,.12);color:var(--accent);border:1px solid rgba(255,93,55,.3)}
+    .row{display:flex;align-items:center;gap:10px}
     footer{opacity:.7;margin-top:36px;font-size:14px}
   </style>
 </head>
 <body>
   <div class="wrap">
     <header>
-      <a href="/"><img src="https://swankytools.com/logo.png" alt="SwankyTools" height="28" style="vertical-align:middle;border-radius:4px"> <strong style="margin-left:8px">SwankyTools™ AI Builder</strong></a>
-      <nav><a href="/">Home</a></nav>
+      <a href="/">
+        <img src="https://swankytools.com/logo-dark.png" alt="SwankyTools" onerror="this.src='https://swankytools.com/logo.png'">
+        <strong>SwankyTools™ AI Builder</strong>
+      </a>
+      <nav><a href="/" class="btn outline">Home</a></nav>
     </header>
 
-    <h1>Pricing</h1>
-    <p class="lead">Start free. Upgrade anytime to unlock exports, pro templates and higher limits.</p>
+    <div class="row">
+      <h1>Pricing</h1>
+      <span class="badge">Start free — upgrade anytime</span>
+    </div>
+    <p class="lead">Unlock exports, pro templates and higher limits when you go Pro.</p>
 
     <div class="grid">
       <div class="card">
@@ -44,7 +59,7 @@
           <li>Basic templates</li>
           <li>Community updates</li>
         </ul>
-        <a class="btn secondary" href="/">Start free</a>
+        <a class="btn outline" href="/">Start free</a>
       </div>
 
       <div class="card">
@@ -55,8 +70,8 @@
           <li>Pro template catalog</li>
           <li>Priority queue</li>
         </ul>
-        <!-- TODO: replace # with your Razorpay Payment Link -->
-        <a class="btn" href="#" rel="nofollow">Buy Pro</a>
+        <!-- Replace # with your Razorpay Payment Link -->
+        <a class="btn primary" href="#" rel="nofollow">Buy Pro</a>
       </div>
 
       <div class="card">
@@ -65,14 +80,14 @@
         <ul>
           <li>Everything in Pro</li>
           <li>White-label rights</li>
-            <li>Email support</li>
+          <li>Email support</li>
         </ul>
-        <!-- TODO: replace # with your Razorpay Payment Link -->
-        <a class="btn" href="#" rel="nofollow">Buy Business</a>
+        <!-- Replace # with your Razorpay Payment Link -->
+        <a class="btn primary" href="#" rel="nofollow">Buy Business</a>
       </div>
     </div>
 
-    <footer>Questions? Ping hello@swankytools.com</footer>
+    <footer>Questions? Ping <a href="mailto:hello@swankytools.com" style="color:inherit">hello@swankytools.com</a></footer>
   </div>
 </body>
 </html>
