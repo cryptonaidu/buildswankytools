@@ -1,4 +1,5 @@
 // src/components/global/global-header.tsx
+import { Link } from 'react-router';
 import { AuthButton } from '../auth/auth-button';
 import { ThemeToggle } from '../theme-toggle';
 import { motion } from 'framer-motion';
@@ -14,9 +15,9 @@ export function GlobalHeader() {
       <div className="relative">
         <div className="absolute inset-0" />
         <div className="relative flex items-center justify-between px-5 h-14">
-          {/* Left: logo + brand (no sidebar trigger) */}
-          <a href="/" className="flex items-center gap-2">
-            {/* Light-mode logo (dark text on light bg) */}
+          {/* Left: brand */}
+          <Link to="/" className="flex items-center gap-2">
+            {/* Light-mode logo */}
             <img
               src="https://swankytools.com/logo-dark.png"
               alt="SwankyTools"
@@ -24,12 +25,10 @@ export function GlobalHeader() {
               loading="eager"
               decoding="async"
               onError={(e) => {
-                // fallback if you don't have logo-dark.png yet
                 (e.currentTarget as HTMLImageElement).src = 'https://swankytools.com/logo.png';
               }}
             />
-            {/* Dark-mode logo (light/white mark for dark bg).
-               If you don't have a dedicated white logo, we invert the normal one. */}
+            {/* Dark-mode logo */}
             <img
               src="https://swankytools.com/logo-light.png"
               alt="SwankyTools"
@@ -44,13 +43,13 @@ export function GlobalHeader() {
             <span className="text-text-primary/90 text-sm font-semibold tracking-wide">
               SwankyTools™ AI Builder
             </span>
-          </a>
+          </Link>
 
-          {/* Right */}
+          {/* Right: nav */}
           <div className="flex items-center gap-3">
-            <a href="/pricing.html" className="text-sm opacity-80 hover:opacity-100">
+            <Link to="/pricing" className="text-sm opacity-80 hover:opacity-100">
               Pricing
-            </a>
+            </Link>
             <ThemeToggle />
             <AuthButton />
           </div>

@@ -139,7 +139,7 @@ export default function Home() {
             Start free
           </button>
           <a
-            href="/pricing.html"
+            href="/pricing"
             className="rounded-xl px-5 py-3 text-sm font-semibold border border-accent/40 text-text-primary hover:bg-bg-3 transition"
           >
             See pricing
