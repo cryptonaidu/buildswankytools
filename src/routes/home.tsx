@@ -117,7 +117,7 @@ export default function Home() {
 				</div>
 				<div className="px-6 p-8 flex flex-col items-center z-10">
 					<h1 className="text-shadow-sm text-shadow-red-200 dark:text-shadow-red-900 text-accent font-medium leading-[1.1] tracking-tight text-6xl w-full mb-4 bg-clip-text bg-gradient-to-r from-text-primary to-text-primary/90">
-						What should we build today?
+						From idea → revenue: build micro-SaaS in minutes!
 					</h1>
 
 					<form
