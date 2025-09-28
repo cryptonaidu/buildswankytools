@@ -85,7 +85,7 @@ export default function Pricing() {
 
         {/* Guarantee / footer copy */}
         <p className="mt-6 text-xs text-text-primary/55">
-          7-day refund window on paid plans. Questions? <a className="underline hover:opacity-90" href="mailto:hello@swankytools.com">hello@swankytools.com</a>
+          7-day refund window on paid plans. Questions? <a className="underline hover:opacity-90" href="mailto:support@swankytools.com">support@swankytools.com</a>
         </p>
       </section>
     </div>
