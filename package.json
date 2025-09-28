@@ -3,6 +3,7 @@
 	"private": true,
 	"version": "0.0.0",
 	"type": "module",
+	"packageManager": "bun@1.1.20",
 	"scripts": {
 		"dev": "DEV_MODE=true vite",
 		"dev:worker": "DEV_MODE=true npm run build && wrangler dev --x-remote-bindings --port 5173",
