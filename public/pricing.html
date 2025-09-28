@@ -1,59 +1,105 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" class="">
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
   <title>Pricing — SwankyTools™ AI Builder</title>
-  <meta name="description" content="Launch AI micro-SaaS tools. Upgrade to unlock exports, pro templates and higher limits."/>
+  <meta name="description" content="Build and sell micro-SaaS tools. Start free, upgrade for exports, pro templates and higher limits."/>
+
+  <script>
+    // Sync with app theme (next-themes stores `theme` in localStorage).
+    try {
+      const t = localStorage.getItem('theme');
+      if (t === 'dark') document.documentElement.classList.add('dark');
+    } catch (_) {}
+  </script>
+
   <style>
     :root{
-      --bg:#0b0d10;--card:#131821;--line:#1f2833;--muted:#9aa3b2;--text:#e9edf3;--accent:#ff5d37
+      --bg:#0b0d10;--card:#131821;--line:#1f2833;--muted:#9aa3b2;
+      --text:#e9edf3;--accent:#ff5d37;--accent-ghost:rgba(255,93,55,.12)
     }
-    @media (prefers-color-scheme: light){
-      :root{--bg:#f7f8fa;--card:#ffffff;--line:#e6e8ee;--muted:#556070;--text:#0b0d10}
+    /* Light theme overrides */
+    .light, :root:not(.dark) {
+      --bg:#f7f8fa;--card:#ffffff;--line:#e6e8ee;--muted:#556070;--text:#0b0d10;
+      --accent:#ff5d37;--accent-ghost:rgba(255,93,55,.10)
     }
-    *{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--text);font:16px/1.6 system-ui,-apple-system,Segoe UI,Inter,Roboto,Arial}
-    .wrap{max-width:1100px;margin:0 auto;padding:28px 20px 60px}
-    header{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px}
-    header a{color:var(--text);opacity:.9;text-decoration:none;display:flex;align-items:center;gap:10px}
-    header img{height:28px;width:28px;border-radius:4px}
-    h1{font-size:40px;margin:12px 0}
-    p.lead{opacity:.8;margin:0 0 28px}
-    .grid{display:grid;gap:18px;grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
-    .card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:22px 22px 20px}
-    .plan{font-weight:800;font-size:18px;margin:0 0 4px}
-    .price{font-size:34px;font-weight:800;margin:8px 0 14px}
+
+    *{box-sizing:border-box}
+    body{margin:0;background:var(--bg);color:var(--text);font:16px/1.6 system-ui,-apple-system,Segoe UI,Inter,Roboto,Arial}
+    a{color:inherit}
+
+    .wrap{max-width:1120px;margin:0 auto;padding:28px 20px 64px}
+    header{display:flex;align-items:center;justify-content:space-between;margin-bottom:28px}
+    .brand{display:flex;align-items:center;gap:10px;text-decoration:none}
+    .brand img{height:28px;width:28px;border-radius:6px;vertical-align:middle}
+
+    /* Logo swap */
+    .logo-light{display:inline}
+    .logo-dark{display:none}
+    .dark .logo-light{display:none}
+    .dark .logo-dark{display:inline}
+
+    h1{font-size:42px;margin:12px 0}
+    p.lead{opacity:.82;margin:0 0 26px}
+
+    .badge{display:inline-flex;align-items:center;gap:8px;padding:6px 10px;border-radius:999px;
+      font-size:12px;background:var(--accent-ghost);color:var(--accent);border:1px solid rgba(255,93,55,.28)}
+
+    .grid{display:grid;gap:20px;grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}
+    .card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:22px;position:relative}
+    .plan{font-weight:800;font-size:18px;margin:0 0 6px}
+    .price{font-size:34px;font-weight:900;margin:6px 0 14px}
+    .desc{font-size:14px;color:var(--muted);margin:-8px 0 14px}
     ul{margin:0 0 18px 20px}
-    li{margin:4px 0}
-    .btn{display:inline-block;padding:12px 16px;border-radius:12px;font-weight:700;text-decoration:none}
+    li{margin:6px 0}
+
+    .btn{display:inline-block;padding:12px 16px;border-radius:12px;font-weight:750;text-decoration:none;transition:filter .15s ease}
     .btn.primary{background:var(--accent);color:#0b0d10}
-    .btn.outline{border:1px solid var(--line);color:var(--text)}
+    .btn.outline{border:1px solid var(--line);color:var(--text);background:transparent}
     .btn:hover{filter:brightness(1.07)}
-    .badge{display:inline-block;padding:6px 10px;border-radius:999px;font-size:12px;background:rgba(255,93,55,.12);color:var(--accent);border:1px solid rgba(255,93,55,.3)}
-    .row{display:flex;align-items:center;gap:10px}
-    footer{opacity:.7;margin-top:36px;font-size:14px}
+
+    .best{position:absolute;top:12px;right:12px;padding:6px 9px;border-radius:999px;
+      background:var(--accent);color:#0b0d10;font-size:11px;font-weight:800;letter-spacing:.02em}
+
+    nav a.btn-link{padding:10px 12px;border-radius:10px;border:1px solid var(--line);text-decoration:none}
+    footer{opacity:.7;margin-top:40px;font-size:14px}
   </style>
 </head>
 <body>
   <div class="wrap">
     <header>
-      <a href="/">
-        <img src="https://swankytools.com/logo-dark.png" alt="SwankyTools" onerror="this.src='https://swankytools.com/logo.png'">
+      <a href="/" class="brand" aria-label="Go home">
+        <!-- Light-mode logo (for light background). Fallback to /logo.png -->
+        <img class="logo-light"
+             src="https://swankytools.com/logo-dark.png"
+             alt="SwankyTools light logo"
+             onerror="this.src='https://swankytools.com/logo.png'">
+        <!-- Dark-mode logo (for dark background). If missing, fallback and invert -->
+        <img class="logo-dark"
+             src="https://swankytools.com/logo-light.png"
+             alt="SwankyTools dark logo"
+             onerror="this.src='https://swankytools.com/logo.png'; this.style.filter='invert(1)'">
         <strong>SwankyTools™ AI Builder</strong>
       </a>
-      <nav><a href="/" class="btn outline">Home</a></nav>
+
+      <nav>
+        <a href="/" class="btn-link">Home</a>
+      </nav>
     </header>
 
-    <div class="row">
-      <h1>Pricing</h1>
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px">
+      <h1 style="margin:0">Pricing</h1>
       <span class="badge">Start free — upgrade anytime</span>
     </div>
     <p class="lead">Unlock exports, pro templates and higher limits when you go Pro.</p>
 
     <div class="grid">
+      <!-- Free -->
       <div class="card">
         <div class="plan">Free</div>
         <div class="price">₹0</div>
+        <div class="desc">Everything you need to try the builder.</div>
         <ul>
           <li>Prompt-to-app builder</li>
           <li>Basic templates</li>
@@ -62,32 +108,39 @@
         <a class="btn outline" href="/">Start free</a>
       </div>
 
-      <div class="card">
+      <!-- Pro (best value) -->
+      <div class="card" style="border-width:2px;border-color:var(--accent)">
+        <span class="best">Best value</span>
         <div class="plan">Pro</div>
         <div class="price">₹499 / month</div>
+        <div class="desc">Publish faster with exports and pro templates.</div>
         <ul>
           <li>Export generated code</li>
           <li>Pro template catalog</li>
           <li>Priority queue</li>
         </ul>
-        <!-- Replace # with your Razorpay Payment Link -->
-        <a class="btn primary" href="#" rel="nofollow">Buy Pro</a>
+        <!-- TODO: replace # with your Razorpay Payment Link -->
+        <a class="btn primary" href="#" rel="nofollow">sPro</a>
       </div>
 
+      <!-- Business -->
       <div class="card">
         <div class="plan">Business</div>
         <div class="price">₹1499 / month</div>
+        <div class="desc">For teams and white-label deployments.</div>
         <ul>
           <li>Everything in Pro</li>
           <li>White-label rights</li>
           <li>Email support</li>
         </ul>
-        <!-- Replace # with your Razorpay Payment Link -->
-        <a class="btn primary" href="#" rel="nofollow">Buy Business</a>
+        <!-- TODO: replace # with your Razorpay Payment Link -->
+        <a class="btn primary" href="#" rel="nofollow">Business</a>
       </div>
     </div>
 
-    <footer>Questions? Ping <a href="mailto:hello@swankytools.com" style="color:inherit">hello@swankytools.com</a></footer>
+    <footer>
+      Questions? Ping <a href="mailto:hello@swankytools.com">support@swankytools.com</a>
+    </footer>
   </div>
 </body>
 </html>
